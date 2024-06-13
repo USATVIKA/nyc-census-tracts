@@ -1,0 +1,34 @@
+---
+title: "nyc-census-tracts"
+author: Satvika Upperla
+format: html
+execute: 
+  echo: false
+---
+
+```{r}
+#| message: false
+#|label: setup
+library(tidyverse)
+library(ggbeeswarm)
+library(viridisLite)
+library(viridis)
+```
+```{r}
+x <- read_csv("nyc_tracts.csv", show_col_types = FALSE)
+```
+```{r}
+
+x |> 
+  drop_na() |> 
+  ggplot(aes(x = med_income, y = race, color = med_income)) +
+    geom_quasirandom(orientation = 'y') +
+    scale_x_continuous(labels = scales::dollar_format()) + scale_color_viridis_c(option = "C", guide = "none") +
+    labs(title = "Household income distribution by largest racial/ethnic group",
+       subtitle = "Census tracts, New York City",
+       x = "Median household income",
+       y = NULL) 
+
+
+```
+
